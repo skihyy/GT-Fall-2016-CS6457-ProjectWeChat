@@ -1,5 +1,5 @@
 # ProjectWeChat - Zombie Game
-CS4455 / 6457 - Video Game Design
+CS4455 / 6457 - Video Game Design - Fall 2016
 
 #Team - WeChat
 
