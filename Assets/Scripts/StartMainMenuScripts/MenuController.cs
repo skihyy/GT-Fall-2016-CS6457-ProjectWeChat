@@ -37,6 +37,9 @@ public class MenuController : MonoBehaviour
 	public GameObject credits;
 	public GameObject quitConfirmBox;
 	public GameObject loadingText;
+	public GameObject controlInstruction;
+	public GameObject staticGameName;
+	public GameObject gameStartGameName;
 
 	// the following text is used for highting for keyboard control
 	public Text introductionButtonText;
@@ -136,6 +139,18 @@ public class MenuController : MonoBehaviour
 	/// <param name="level">Level index.</param>
 	public void StartNewGame (int level)
 	{
+		// not the best way
+		// need to change
+		shader.SetActive (true);
+
+		introductionButton.SetActive (false);
+		startGameButton.SetActive (false);
+		showCreditsButton.SetActive (false);
+		quitButton.SetActive (false);
+
+		controlInstruction.SetActive (false);
+		staticGameName.SetActive (false);
+		gameStartGameName.SetActive (true);
 		loadingText.SetActive (true);
 		SceneManager.LoadScene (level);
 	}

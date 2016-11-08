@@ -3,6 +3,10 @@ using System.Collections;
 
 [RequireComponent (typeof (MovieTexture))]
 
+/// <summary>
+/// Background movie controller at the 1st scene in the game.
+/// Author: Yuyang He
+/// </summary>
 public class BackgroundMovieControl : MonoBehaviour {
 
 	public MovieTexture movieTexture;
@@ -15,13 +19,8 @@ public class BackgroundMovieControl : MonoBehaviour {
 	}
 	
 	// Use this for initialization
-	void Start () {
+	public void Start () {
 		render.material.mainTexture = movieTexture;
 		movieTexture.Play ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
