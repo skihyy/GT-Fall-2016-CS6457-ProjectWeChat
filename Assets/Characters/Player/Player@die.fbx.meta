@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: de2557699e9744cab81827e7b3dfe10c
-timeCreated: 1479063544
+guid: 7e727012c6afa4b2797dfd60684029c8
+timeCreated: 1479177902
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -137,7 +137,7 @@ ModelImporter:
     400126: Spine
     400128: Spine1
     400130: Spine2
-    7400000: jump_attack
+    7400000: die
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -164,18 +164,18 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: jump_attack
+      name: die
       takeName: mixamo.com
-      firstFrame: 15
-      lastFrame: 65
+      firstFrame: 0
+      lastFrame: 138
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -185,54 +185,8 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves:
-      - name: ColliderHeight
-        curve:
-          serializedVersion: 2
-          curve:
-          - time: 0
-            value: 2
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-          - time: 0.14008176
-            value: 1
-            inSlope: 0.024437403
-            outSlope: 0.024437403
-            tangentMode: 0
-          - time: 0.4009782
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-          - time: 0.5417598
-            value: 2
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-          - time: 1
-            value: 2
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-          preInfinity: 2
-          postInfinity: 2
-          rotationOrder: 0
-      events:
-      - time: 0.5046912
-        functionName: EnableHit
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: DisableHit
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      curves: []
+      events: []
       transformMask:
       - path: 
         weight: 1

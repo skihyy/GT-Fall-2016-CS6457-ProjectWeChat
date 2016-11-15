@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Player movement control.
+/// <author>Yuyang He</author>
+/// </summary>
 public class PlayerMovementControl : MonoBehaviour
 {
-
 	private Animator playerAnimator;
-	private CapsuleCollider playerCapsuleCollider;
 	public Transform eyePosition;
 
 	private float vSpeed = 0f;
 	private float hSpeed = 0f;
+
+	//used for attack
+	private bool canHit = false;
+	private static string CITIZEN_TAG = "citizen";
 
 	// use for detect which state animation is in
 	private AnimatorStateInfo currentSateInfo;
@@ -26,7 +32,6 @@ public class PlayerMovementControl : MonoBehaviour
 	void Awake ()
 	{
 		playerAnimator = GetComponent<Animator> ();
-		playerCapsuleCollider = GetComponent<CapsuleCollider> ();
 		playerAnimator.SetBool ("JumpOrAttack", false);
 	}
 
@@ -45,8 +50,8 @@ public class PlayerMovementControl : MonoBehaviour
 				playerAnimator.SetBool ("JumpOrAttack", true);
 			}
 		} else if (JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash) {
+			// goes back to run mode
 			if (!playerAnimator.IsInTransition (0)) {
-				playerCapsuleCollider.height = playerAnimator.GetFloat ("ColliderHeight");
 				playerAnimator.SetBool ("JumpOrAttack", false);
 			}
 		
@@ -61,9 +66,42 @@ public class PlayerMovementControl : MonoBehaviour
 		} else {
 			Debug.Log (currentSateInfo.fullPathHash);
 		}
+	}
 
-		if (.25f > transform.position.y) {
-			transform.position.Set (transform.position.x, .25f, transform.position.z);
+	/// <summary>
+	/// Enable the player to attack others. It is an animation event.
+	/// </summary>
+	public void EnableHit()
+	{
+		canHit = true;
+	}
+
+	/// <summary>
+	/// Disable the player to attack others. It is an animation event.
+	/// </summary>
+	public void DisableHit()
+	{
+		canHit = false;
+	}
+
+	/// <summary>
+	/// Raises the trigger enter event.
+	/// </summary>
+	/// <param name="collider">Collider.</param>
+	public void OnTriggerEnter(Collider collider)
+	{
+		//Debug.Log (CITIZEN_TAG == collider.gameObject.tag);
+
+		// 3 requirements
+		// 1 - citizen detected
+		// 2 - zombie is jumping
+		// 3 - zombie is in the hitable mode
+		if (CITIZEN_TAG == collider.gameObject.tag && JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash && canHit) {
+			CitizenHealth citizenHealthController = collider.gameObject.GetComponent<CitizenHealth> ();
+			citizenHealthController.takeDamage ();
+			DisableHit ();
+
+			//Debug.Log (citizenHealthController.currentHealth);
 		}
 	}
 }
