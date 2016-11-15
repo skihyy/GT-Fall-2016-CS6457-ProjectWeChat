@@ -18,13 +18,14 @@ public class zombieMove : MonoBehaviour {
 	int ischasing;
 	Animator anim;
 	bool isPatrol;
-	bool attacking;
+	public bool attacking;
 	Vector3 target;
 	GameObject targetCitizen;
 	AudioSource audio;
 	public AudioClip find;
 	public AudioClip hit;
 	ParticleSystem Ps;
+
 	// Use this for initialization
 	void Start(){
 		//gameObject.SetActive(false);
@@ -32,7 +33,7 @@ public class zombieMove : MonoBehaviour {
 		//GameObject.Find (cube).SetActive(false);
 	}
 	void Awake () {
-		
+
 		//citizens = GameObject.FindGameObjectsWithTag ("citizens");
 		pp1 = GameObject.Find ("zombiePoint1");
 		pp2 = GameObject.Find ("zombiePoint2");
@@ -83,14 +84,16 @@ public class zombieMove : MonoBehaviour {
 				targetCitizen.GetComponent<CitizenMove>().chasingZombies[id]=0;
 			}
 			ischasing = -1;
+			attacking = false;
+			target = followcube.transform.position;
 		}
 
 		else if (currentnear != -1 ) {
 			anim.SetFloat ("run",0.2f);
 			c.setSpeed(1);
 			ischasing=citizens[currentnear].GetComponent<CitizenMove>().id;
-            citizens[currentnear].GetComponent<CitizenMove>().chasingZombies[id]=1;
-            target=citizens[currentnear].transform.position;
+			citizens[currentnear].GetComponent<CitizenMove>().chasingZombies[id]=1;
+			target=citizens[currentnear].transform.position;
 			isPatrol=false;
 			targetCitizen = citizens [currentnear];
 		}
@@ -99,18 +102,25 @@ public class zombieMove : MonoBehaviour {
 	}
 
 	void Update () {
-		
+
 		findPlayerInRange ();
-         
+		if (Vector3.Distance (transform.position, followcube.transform.position) > 5) {
+			c.setSpeed (2);
+		} 
 		if (isPatrol) {
 			patrol ();
 		} else {
 			c.des = target;
 		}
 		if (!attacking) {
-			transform.LookAt (followcube.transform);
+
+			Transform tempt = followcube.transform;
+			Vector3 tempp = tempt.position;
+			tempp.y = transform.position.y;
+			tempt.position = tempp;
+			transform.LookAt (tempt);
+			//transform.LookAt (followcube.transform);
 		}
-		//transform.LookAt (followcube.transform);
 	}
 
 	void patrol(){
@@ -146,9 +156,9 @@ public class zombieMove : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other)
 	{
-		
+
 		if (isPatrol) {
-			
+
 			if (other.gameObject == pp1) {
 				//Debug.Log ("enter");
 				patrolid = 2;
@@ -180,19 +190,16 @@ public class zombieMove : MonoBehaviour {
 			}
 			anim.SetFloat ("attack",0.2f);
 			//c.setSpeed (2);
-		    attacking = true;
+			attacking = true;
 			//Debug.Log ("attacking");
 		}
 
 	}
 
-	void OnTriggerStay(Collider other) {
+	/*void OnTriggerStay(Collider other) {
 		if (other.gameObject.tag=="citizen"){
 			if (other.gameObject.GetComponent<CitizenHealth> ().currentHealth < 0) {
-				/*anim.SetFloat ("attack",0.0f);
-				c.setSpeed (1);
-				isPatrol = true;
-				attacking = false;*/
+				
 				return;
 			}
 			anim.SetFloat ("attack",0.2f);
@@ -200,7 +207,7 @@ public class zombieMove : MonoBehaviour {
 			attacking = true;
 
 	    }
-    }
+    }*/
 
 
 	void OnTriggerExit (Collider other)
@@ -217,7 +224,7 @@ public class zombieMove : MonoBehaviour {
 	void hitSound(){
 		audio.clip = hit;
 		audio.Play ();
-		targetCitizen.GetComponent<CitizenHealth>().takeDamage();
+		targetCitizen.GetComponent<CitizenHealth>().takeDamage(200);
 	}
 
 }

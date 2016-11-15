@@ -15,7 +15,7 @@ public class BattleShip : MonoBehaviour {
     void Start () {
         smooth = 0.2f; 
         //Soldier appears after 30s
-        timeLeft= 30f;
+        timeLeft= 20f;
         audios = this.gameObject.GetComponents<AudioSource>();
 
         audios[0].PlayDelayed(timeLeft);

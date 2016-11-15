@@ -19,9 +19,9 @@ public class cube : MonoBehaviour {
 
 	public void setSpeed(int state){
 		if (state == 0) {
-			nav.speed = 0.5f;
+			nav.speed = 0.35f;
 		} else if (state == 1) {
-			nav.speed = 3.0f;
+			nav.speed = 3.5f;
 		} else if (state == 2) {
 			nav.speed = 0.0f;
 		}

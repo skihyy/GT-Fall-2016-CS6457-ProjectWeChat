@@ -36,8 +36,17 @@ public class CitizenHealth : MonoBehaviour {
 		
 	}
 
-	public void takeDamage(){
-		currentHealth -= 20;
+//	public void takeDamage(){
+//		currentHealth -= 20;
+//		if (currentHealth <= 0 && !isDead) {
+//			die ();
+//		} else {
+//			citizenAudio.Play ();
+//		}
+//	}
+
+	public void takeDamage(int damage){
+		currentHealth -= damage;
 		if (currentHealth <= 0 && !isDead) {
 			die ();
 		} else {
@@ -52,10 +61,20 @@ public class CitizenHealth : MonoBehaviour {
 		citizenMove.enabled = false;
 		locomotionSimpleAgent.enabled = false;
 		anim.SetTrigger ("Die");
-		callzombie.SetActive (true);
-		callzombie.transform.position = transform.position;
+		Vector3 temp = callcube.transform.position;
+		temp.x = transform.position.x;
+		temp.z = transform.position.z;
 		callcube.SetActive (true);
-		callcube.transform.position = transform.position;
+		callcube.transform.position = temp;
+
+
+		temp = callzombie.transform.position;
+		temp.x = transform.position.x+1;
+		temp.z = transform.position.z;
+		callzombie.SetActive (true);
+
+		callzombie.transform.position = temp;
+
 		Destroy (gameObject, 2f);
 	}
 

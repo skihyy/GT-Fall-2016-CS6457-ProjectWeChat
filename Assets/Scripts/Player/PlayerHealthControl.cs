@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerHealthControl : MonoBehaviour {
 
 	private int health = 100;
+	private bool die = false;
 	private Animator playerAnimator;
 	//private float timer = 0f; // test for death
 	private PlayerMovementControl playerMovementControl;
@@ -51,11 +52,12 @@ public class PlayerHealthControl : MonoBehaviour {
 
 	private void Die()
 	{
-		if(!playerAnimator.GetBool("Die"))
+		if(!die)
 		{
-			playerAnimator.SetBool ("Die", true);
+			playerAnimator.SetTrigger ("Die");
 			playerMovementControl.enabled = false;
 			this.enabled = false;
+			die = true;
 		}
 	}
 }

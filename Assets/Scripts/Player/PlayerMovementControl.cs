@@ -113,7 +113,7 @@ public class PlayerMovementControl : MonoBehaviour
 		// 3 - zombie is in the hitable mode
 		if (CITIZEN_TAG == collider.gameObject.tag && JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash && canHit) {
 			CitizenHealth citizenHealthController = collider.gameObject.GetComponent<CitizenHealth> ();
-			citizenHealthController.takeDamage ();
+			citizenHealthController.takeDamage (200);
 			DisableHit ();
 
 			//Debug.Log (citizenHealthController.currentHealth);
