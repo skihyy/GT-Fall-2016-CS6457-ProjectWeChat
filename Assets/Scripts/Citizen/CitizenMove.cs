@@ -213,8 +213,9 @@ public class CitizenMove : MonoBehaviour {
 		navMeshAgent.destination = patrolPoint[nextPatrolPoint].position;
 		navMeshAgent.Resume ();
 
-		if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending) {
+		 if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending) {
 			nextPatrolPoint = (nextPatrolPoint + 1) % patrolPoint.Length;
+			nextPatrolPoint = Random.Range (0, patrolPoint.Length - 1);
 		}
 	}
 

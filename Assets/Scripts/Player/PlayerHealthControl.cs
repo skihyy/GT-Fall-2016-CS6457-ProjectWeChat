@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerHealthControl : MonoBehaviour {
 
 	private int health = 100;
 	private Animator playerAnimator;
-	private float timer = 0f; // test for death
+	//private float timer = 0f; // test for death
 	private PlayerMovementControl playerMovementControl;
+	public Text healthText;
 
 	public void Awake()
 	{
@@ -19,24 +21,33 @@ public class PlayerHealthControl : MonoBehaviour {
 	{
 		health -= amount;
 
+		healthText.text = health + "";
+
 		Debug.Log (health + "");
 
 		if (0 >= health) {
 			Die ();
+			healthText.text = "0";
 		}
 	}
 
-	public void Update()
-	{
-		timer += Time.deltaTime;
-
-		if (3f <= timer) {
-			if(!playerAnimator.GetBool("Die"))
-			{
-				Die ();
-			}
-		}
-	}
+//	public void Update()
+//	{
+//		timer += Time.deltaTime;
+//
+//		if (1f <= timer) {
+//
+//			Debug.Log (healthText.text);
+//
+//			health -= 50;
+//			timer = 0f;
+//			healthText.text = health + "";
+//		}
+//		if (0 >= health) {
+//			Die ();
+//			healthText.text = "0";
+//		}
+//	}
 
 	private void Die()
 	{
