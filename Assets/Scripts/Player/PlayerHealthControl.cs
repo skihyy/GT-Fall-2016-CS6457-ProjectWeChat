@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealthControl : MonoBehaviour {
 
-	private int health = 100;
-	private bool die = false;
+	public int health = 100;
 	private Animator playerAnimator;
 	//private float timer = 0f; // test for death
 	private PlayerMovementControl playerMovementControl;
@@ -52,12 +52,12 @@ public class PlayerHealthControl : MonoBehaviour {
 
 	private void Die()
 	{
-		if(!die)
+		if(!playerAnimator.GetBool("Die"))
 		{
-			playerAnimator.SetTrigger ("Die");
+			playerAnimator.SetBool ("Die", true);
 			playerMovementControl.enabled = false;
 			this.enabled = false;
-			die = true;
+			SceneManager.LoadScene ("GameOverMenu");
 		}
 	}
 }

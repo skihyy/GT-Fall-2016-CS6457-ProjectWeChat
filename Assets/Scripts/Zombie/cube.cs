@@ -3,11 +3,11 @@ using System.Collections;
 
 public class cube : MonoBehaviour {
 	public Vector3 des;
-	NavMeshAgent nav;
+	UnityEngine.AI.NavMeshAgent nav;
 
 	// Use this for initialization
 	void Awake () {
-		nav = GetComponent<NavMeshAgent> ();
+		nav = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		des = transform.position;
 	}
 	

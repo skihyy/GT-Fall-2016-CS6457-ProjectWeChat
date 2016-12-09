@@ -7,13 +7,13 @@ public class CitizenMove : MonoBehaviour {
 	public int[] chasingZombies;
 	public Transform[] patrolPoint;
 	public int id;
-	private NavMeshAgent navMeshAgent;
+	private UnityEngine.AI.NavMeshAgent navMeshAgent;
 	private bool isSeen;
 	private int nextPatrolPoint = 0;
 	// Use this for initialization
 	void Start () {
 		chasingZombies = new int[10];
-		navMeshAgent = GetComponent<NavMeshAgent> ();
+		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 	}
 
 	// Update is called once per frame

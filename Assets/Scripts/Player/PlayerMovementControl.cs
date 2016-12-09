@@ -14,8 +14,9 @@ public class PlayerMovementControl : MonoBehaviour
 	private AudioSource screamSoundSource;
 	private AudioSource footStepSource;
 	private ParticleSystem playerFootParticleSystem;
+	private ParticleSystem hitparticle;
 	private float footSoundTimer = 0f;
-
+	bool playerInrange=false;
 	// speed
 	private float vSpeed = 0f;
 	private float hSpeed = 0f;
@@ -27,7 +28,7 @@ public class PlayerMovementControl : MonoBehaviour
 	// use for detect which state animation is in
 	private AnimatorStateInfo currentSateInfo;
 	private static string NORMAL_STATE = "BaseLayer.DefaultTree";
-	private static string JUMP_OR_ATTACK_STATE = "BaseLayer.jump_attack";
+	private static string JUMP_OR_ATTACK_STATE = "BaseLayer.attack";
 	private static int NORMAL_STATE_HASH = Animator.StringToHash (NORMAL_STATE);
 	private static int JUMP_OR_ATTACK_STATE_HASH = Animator.StringToHash (JUMP_OR_ATTACK_STATE);
 
@@ -45,6 +46,7 @@ public class PlayerMovementControl : MonoBehaviour
 		playerAnimator.SetBool ("JumpOrAttack", false);
 		playerFootParticleSystem = GetComponentInChildren<ParticleSystem> ();
 		playerFootParticleSystem.startColor = Color.grey;
+		hitparticle = GameObject.Find ("AttackHand").GetComponent<ParticleSystem> ();
 	}
 
 	void Update ()
@@ -60,13 +62,14 @@ public class PlayerMovementControl : MonoBehaviour
 
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				playerAnimator.SetBool ("JumpOrAttack", true);
+				canHit = true;
 			}
 		} else if (JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash) {
 			// fall back on the ground
-			if (!playerAnimator.IsInTransition (0)) {
+			/*if (!playerAnimator.IsInTransition (0)) {
 				playerAnimator.SetBool ("JumpOrAttack", false);
 				playerFootParticleSystem.Emit (100);
-			}
+			}*/
 		
 			Ray ray = new Ray (eyePosition.position, Vector3.down);
 
@@ -106,18 +109,23 @@ public class PlayerMovementControl : MonoBehaviour
 	public void OnTriggerEnter(Collider collider)
 	{
 		//Debug.Log (CITIZEN_TAG == collider.gameObject.tag);
-
+		if(CITIZEN_TAG == collider.gameObject.tag && canHit){
+			CitizenHealth citizenHealthController = collider.gameObject.GetComponent<CitizenHealth> ();
+			citizenHealthController.takeDamage ();
+			playerInrange = true;
+			DisableHit ();
+		}
 		// 3 requirements
 		// 1 - citizen detected
 		// 2 - zombie is jumping
 		// 3 - zombie is in the hitable mode
-		if (CITIZEN_TAG == collider.gameObject.tag && JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash && canHit) {
+		/*if (CITIZEN_TAG == collider.gameObject.tag && JUMP_OR_ATTACK_STATE_HASH == currentSateInfo.fullPathHash && canHit) {
 			CitizenHealth citizenHealthController = collider.gameObject.GetComponent<CitizenHealth> ();
-			citizenHealthController.takeDamage (200);
+			citizenHealthController.takeDamage ();
 			DisableHit ();
 
 			//Debug.Log (citizenHealthController.currentHealth);
-		}
+		}*/
 	}
 
 	/// <summary>
@@ -144,5 +152,16 @@ public class PlayerMovementControl : MonoBehaviour
 		screamSoundSource.pitch = Random.Range (0.8f, 1.2f);
 		screamSoundSource.volume = Random.Range (0.15f, 0.35f);
 		screamSoundSource.Play ();
+	}
+
+	public void hitParticle(){
+		if (playerInrange) {
+			hitparticle.Play();
+			playerInrange = false;
+		}
+		playerAnimator.SetBool ("JumpOrAttack", false);
+	}
+	public void hitSound(){
+		
 	}
 }

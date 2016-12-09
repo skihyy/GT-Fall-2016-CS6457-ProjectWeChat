@@ -160,7 +160,7 @@ public class MenuController : MonoBehaviour
 	/// </summary>
 	public void QuitGame ()
 	{
-		//UnityEditor.EditorApplication.isPlaying = false; // debug in editor
+		// UnityEditor.EditorApplication.isPlaying = false; // debug in editor
 
 		Application.Quit ();
 	}

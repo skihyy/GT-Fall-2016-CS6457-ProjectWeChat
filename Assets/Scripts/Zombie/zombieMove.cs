@@ -224,7 +224,10 @@ public class zombieMove : MonoBehaviour {
 	void hitSound(){
 		audio.clip = hit;
 		audio.Play ();
-		targetCitizen.GetComponent<CitizenHealth>().takeDamage(200);
+		targetCitizen.GetComponent<CitizenHealth>().takeDamage();
+	}
+	void hitParticle(){
+		
 	}
 
 }
