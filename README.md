@@ -4,8 +4,7 @@ CS4455 / 6457 - Video Game Design - Fall 2016
 #Team - WeChat
 
 Nan Li, 1st Year MS CS  
-Rui Wang, 1st Year MS CS  
-Michael Azogu, 5th Year CS (Senior)  
+Rui Wang, 1st Year MS CS   
 Yuyang He, 1st Year MS CS  
 Aoyi Li, 1st year MS CS  
 
